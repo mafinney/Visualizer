@@ -16,6 +16,8 @@ import java.awt.*;
 import java.util.*;
 import java.awt.geom.*;
 
+import java.awt.event.*;
+
 class Graph extends JLayeredPane {
     private ArrayList<DraggablePanel> nodes;
     private ArrayList<Edge> edges;
@@ -43,22 +45,37 @@ class Graph extends JLayeredPane {
         }
         repaint();
     }
-}
 
-class Edge {
-    private DraggablePanel nodeOne;
-    private DraggablePanel nodeTwo;
 
-    public Edge(DraggablePanel nodeOne, DraggablePanel nodeTwo) {
-        this.nodeOne = nodeOne;
-        this.nodeTwo = nodeTwo;
-    }
+    // GRAPH TESTING
+    public static void main(String[] args) {
+        JFrame window = new JFrame("Graph");
+        window.setLayout(new BorderLayout());
+        window.setMinimumSize(new Dimension(600, 400));
 
-    public Point nodeOneLocation() {
-        return nodeOne.getLocation();
-    }
+        JButton addNode = new JButton("add node");
+        addNode.setBounds(0, 0, 150, 30);
 
-    public Point nodeTwoLocation() {
-        return nodeTwo.getLocation();
+        Graph g = new Graph();
+
+        addNode.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String value = JOptionPane.showInputDialog("new node value:");
+                DraggablePanel newNode = new DraggablePanel(value);
+                newNode.setBounds(50, 50, 100, 30);
+                DraggablePanel tmp = new DraggablePanel("tmp");
+                tmp.setBounds(50, 50, 100, 30);
+
+                g.addNode(newNode);
+                g.addNode(tmp);
+                g.addEdge(newNode, tmp);
+                window.repaint();
+            }
+        });
+
+        window.add(addNode, BorderLayout.NORTH);
+        window.add(g, BorderLayout.CENTER);
+
+        window.setVisible(true);
     }
 }

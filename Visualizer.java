@@ -10,15 +10,10 @@ public class Visualizer {
         
         JButton addNode = new JButton("Add node");
         addNode.setBounds(0, 0, 150, 30);
+        JButton popNode = new JButton("Pop node");
+        popNode.setBounds(0, 0, 150, 30);
 
-        DraggablePanel head = new DraggablePanel("head");
-        head.setBounds(50, 50, 100, 30);
-        DraggablePanel tail = new DraggablePanel("tail");
-        tail.setBounds(50, 50, 100, 30);
-        Graph graph = new Graph();
-        graph.addNode(head);
-        graph.addNode(tail);
-        graph.addEdge(head, tail);
+        LinkedList list = new LinkedList();
 
         addNode.addActionListener(new ActionListener() {
             @Override
@@ -26,17 +21,23 @@ public class Visualizer {
                 String value = JOptionPane.showInputDialog("New node value:");
                 DraggablePanel newNode = new DraggablePanel(value);
                 newNode.setBounds(50, 50, 100, 30);
-                DraggablePanel tmp = new DraggablePanel("tmp");
-                tmp.setBounds(50, 50, 100, 30);
-                graph.addNode(newNode);
-                graph.addNode(tmp);
-                graph.addEdge(newNode, tmp);
+                list.push(newNode);
                 window.repaint();
             }
         });
 
-        window.add(graph, BorderLayout.CENTER);
-        window.add(addNode, BorderLayout.NORTH);
+        popNode.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                list.pop();
+            }
+        });
+
+        window.add(list, BorderLayout.CENTER);
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.add(addNode);
+        buttonPanel.add(popNode);
+        window.add(buttonPanel, BorderLayout.NORTH);
     
         window.repaint();
         window.setVisible(true);
