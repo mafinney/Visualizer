@@ -9,35 +9,33 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.*;
 
-class LinkedList extends JLayeredPane {
-    private ArrayList<DraggablePanel> nodes;
-    private ArrayList<Edge> edges;
-    private int curr;
-    private int head;
+class JLinkedListPane extends JLayeredPane {
+    private LinkedList<DraggablePanel> nodes;
+    private LinkedList<Edge> edges;
 
-    public LinkedList() {
-        nodes = new ArrayList<>();
-        edges = new ArrayList<>();
-        curr = -1;
-        head = 0;
+    public JLinkedListPane() {
+        nodes = new LinkedList<>();
+        edges = new LinkedList<>();
     }
 
     public void push(DraggablePanel node) {
-        if (!nodes.isEmpty()) {
-            edges.add(new Edge(nodes.get(curr), node));
+        if (nodes.size() > 0) {
+            edges.addLast(new Edge(nodes.peekLast(), node));
         }
-        nodes.add(node);
+        nodes.addLast(node);
         add(node);
-        curr++;
         repaint();
     }
 
     public void pop() {
-        if (head < edges.size()) {
-            remove(nodes.get(0));
-            edges.set(head, null);
-            head++;
+        if (nodes.size() > 0) {
+            remove(nodes.peekFirst());
+            nodes.removeFirst();
+            if (edges.size() > 0) {
+                edges.removeFirst();
+            }
         }
+        repaint();
     }
 
     protected void paintComponent(Graphics g) {

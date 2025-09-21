@@ -13,7 +13,7 @@ public class Visualizer {
         JButton popNode = new JButton("Pop node");
         popNode.setBounds(0, 0, 150, 30);
 
-        LinkedList list = new LinkedList();
+        JLinkedListPane list = new JLinkedListPane();
 
         addNode.addActionListener(new ActionListener() {
             @Override
