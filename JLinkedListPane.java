@@ -1,8 +1,6 @@
 /**
  * LinkedList holds all the nodes in order in an ArrayList, only able to push to the end
  * and pop from the front
- * 
- * Change nodes and edges to be stored in queues for easier popping and drawing edges
  */
 
 import javax.swing.*;
