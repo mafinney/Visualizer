@@ -9,9 +9,6 @@ import java.awt.event.*;
 class DraggablePanel extends JPanel {
     private JLabel label;
     private Point mouseClickLocation;
-    private JPopupMenu popup;
-    private JMenuItem updateValue;
-    private JMenuItem delete;
 
     public DraggablePanel(String str) {
         super();
@@ -20,25 +17,11 @@ class DraggablePanel extends JPanel {
         label = new JLabel(str);
         add(label);
 
-        popup = new JPopupMenu();
-        updateValue = new JMenuItem("Update value");
-        popup.add(updateValue);
-
-        updateValue.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String newValue = JOptionPane.showInputDialog("Update value:", getValue());
-                setValue(newValue);
-            }
-        });
-
         addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON1) {
                     mouseClickLocation = e.getPoint();
-                } else if (e.getButton() == MouseEvent.BUTTON3) {
-                    popup.show(e.getComponent(), e.getPoint().x, e.getPoint().y);
                 } else {
                     mouseClickLocation = null;
                 }

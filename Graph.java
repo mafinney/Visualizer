@@ -19,7 +19,7 @@ import java.awt.geom.*;
 import java.awt.event.*;
 
 class Graph extends JLayeredPane {
-    private ArrayList<DraggablePanel> nodes;
+    private ArrayList<Node> nodes;
     private ArrayList<Edge> edges;
 
     public Graph() {
@@ -28,13 +28,13 @@ class Graph extends JLayeredPane {
         edges = new ArrayList<>();
     }
 
-    public void addNode(DraggablePanel node) {
+    public void addNode(Node node) {
         nodes.add(node);
         add(node);
         repaint();
     }
 
-    public void addEdge(DraggablePanel nodeOne, DraggablePanel nodeTwo) {
+    public void addEdge(Node nodeOne, Node nodeTwo) {
         edges.add(new Edge(nodeOne, nodeTwo));
         repaint();
     }
@@ -44,6 +44,19 @@ class Graph extends JLayeredPane {
             g.drawLine(e.nodeOneLocation().x, e.nodeOneLocation().y, e.nodeTwoLocation().x, e.nodeTwoLocation().y);
         }
         repaint();
+    }
+
+    public void delete(Node node) {
+        nodes.remove(node);
+        Edge currEdge;
+        for (int i = 0; i < edges.size(); i++) {
+            currEdge = edges.get(i);
+            if (currEdge.containsNode(node)) {
+                edges.remove(currEdge);
+                i--;
+            }
+        }
+        remove(node);
     }
 
 
@@ -61,9 +74,9 @@ class Graph extends JLayeredPane {
         addNode.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String value = JOptionPane.showInputDialog("new node value:");
-                DraggablePanel newNode = new DraggablePanel(value);
+                Node newNode = new Node(value);
                 newNode.setBounds(50, 50, 100, 30);
-                DraggablePanel tmp = new DraggablePanel("tmp");
+                Node tmp = new Node("tmp");
                 tmp.setBounds(50, 50, 100, 30);
 
                 g.addNode(newNode);
