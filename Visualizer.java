@@ -13,7 +13,7 @@ public class Visualizer {
 
         window.add(initButtonPanel(addNode, popNode), BorderLayout.NORTH);
 
-        JStack dataStructure = new JStack();
+        JQueue dataStructure = new JQueue();
         window.add(dataStructure, BorderLayout.CENTER);
 
         addNode.addActionListener(new ActionListener() {
